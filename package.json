@@ -1,0 +1,12 @@
+{
+  "name": "file_server",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "service": "clear && node server.js",
+    "call": "clear && node client.js"
+  },
+  "author": "Logan Woolf",
+  "license": "ISC"
+}
