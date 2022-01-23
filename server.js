@@ -1,5 +1,5 @@
 const net = require('net');
-const { manager } = require('./fileServer');
+const fs = require('fs');
 
 const port = 3000;
 const server = net.createServer();
@@ -17,8 +17,20 @@ server.on("connection", (client) => {
   client.on('data', (data) => {
     const [command, parameter] = data.toLowerCase().split(' ');
     console.log(`Client says: ${data}`);
+
     if (command === 'request') {
-      client.write(`Fetching ${parameter}, standby...`);
+      fs.readFile(`./share/${parameter}`, (err, data) => {
+        client.write(`Fetching ${parameter}, standby...\n`);
+        if (err) {
+          client.write(`Unable to retrieve ${parameter}`);
+          client.end();
+          return;
+        }
+        client.write(`    === ${parameter} ===\n\n`);
+        client.write(data);
+        client.write('\n');
+        client.end();
+      });
     }
   });
 });

@@ -10,10 +10,10 @@ const conn = net.createConnection({
 conn.setEncoding('utf8');
 
 conn.on('connect', () => {
-  conn.write(`${username || 'a user'} has connected!\n`);
+  conn.write(`${username || 'a user'} has connected!`);
   conn.write(`Request ${filename}`);
 });
 
 conn.on('data', (data) => {
-  console.log(`Server says: ${data}`);
+  console.log(data);
 });
